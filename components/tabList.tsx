@@ -24,7 +24,7 @@ export default function TabList({ list, item, page }: ITabListProps) {
                 (item === tab.value
                   ? 'border-indigo-500 font-bold'
                   : 'border-gray-900') +
-                ' h-14 w-full cursor-pointer border-b-2  text-sm'
+                ' h-14 w-full cursor-pointer border-b-2 text-sm md:text-lg text-indigo-500'
               }
               key={i}
             >
