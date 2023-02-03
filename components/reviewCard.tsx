@@ -7,7 +7,7 @@ interface IReviewCardProps {
 
 export default function ReviewCard({ showPoster }: IReviewCardProps) {
   return (
-    <li className="border-b border-gray-400 py-6">
+    <li className="last:border-0 border-b border-gray-400 py-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="h-14 w-14 rounded-full bg-gray-400" />
