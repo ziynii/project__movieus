@@ -15,7 +15,7 @@ export default function ReviewCard({ showPoster }: IReviewCardProps) {
             <span className="text-xs text-gray-300">날짜</span>
           </div>
         </div>
-        <button className="rounded-md border border-indigo-500 bg-indigo-50 px-3 py-2 text-xs text-indigo-500">
+        <button className="rounded-md border border-indigo-500 bg-indigo-50 px-3 py-2 text-xs text-indigo-500 hover:bg-indigo-100">
           좋아요 17
         </button>
       </div>
