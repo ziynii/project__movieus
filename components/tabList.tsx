@@ -9,12 +9,13 @@ interface IList {
 interface ITabListProps {
   list: IList[];
   item: string;
+  page: string;
 }
 
-export default function TabList({ list, item }: ITabListProps) {
+export default function TabList({ list, item, page }: ITabListProps) {
   console.log(list);
   return (
-    <div className="mt-12">
+    <div>
       <ul className="flex justify-between ">
         {list &&
           list.map((tab, i) => (
@@ -28,7 +29,7 @@ export default function TabList({ list, item }: ITabListProps) {
               key={i}
             >
               <Link
-                href={`/movie/${tab.link}`}
+                href={`/${page}/${tab.link}`}
                 className="flex h-full w-full items-center justify-center"
               >
                 {tab.value}
