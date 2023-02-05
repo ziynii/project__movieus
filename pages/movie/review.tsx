@@ -5,7 +5,7 @@ import React from 'react';
 export default function Review() {
   return (
     <MovieLayout tabValue="리뷰">
-      <div className="mt-8 flex items-center">
+      <div className="flex items-center">
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-indigo-500">
           <svg
             fill="white"
