@@ -9,6 +9,7 @@ interface IInputProps {
   required: boolean;
   kind?: 'text' | 'email' | 'search';
   placeholder: string;
+  disabled?: boolean;
 }
 
 export default function Input({
@@ -19,10 +20,15 @@ export default function Input({
   register,
   required,
   placeholder,
+  disabled,
 }: IInputProps) {
   return (
     <div className="flex flex-col">
-      {label ? <label className='mb-2' htmlFor={name}>{label}</label> : null}
+      {label ? (
+        <label className="mb-2" htmlFor={name}>
+          {label}
+        </label>
+      ) : null}
 
       {kind === 'text' ? (
         <input
@@ -31,7 +37,10 @@ export default function Input({
           {...register}
           required={required}
           placeholder={placeholder}
-          className={"flex-grow px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900" + (name === 'search' ? ' rounded-full' : 'rounded')}
+          className={
+            'flex-grow px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900' +
+            (name === 'search' ? ' rounded-full' : 'rounded')
+          }
         />
       ) : null}
 
@@ -41,8 +50,9 @@ export default function Input({
           type={type}
           {...register}
           required={required}
+          disabled={disabled}
           placeholder={placeholder}
-          className=" flex-grow rounded  px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+          className=" flex-grow rounded disabled:opacity-70 px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900"
         />
       ) : null}
     </div>
