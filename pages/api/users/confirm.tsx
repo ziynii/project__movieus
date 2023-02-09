@@ -15,6 +15,7 @@ async function handler(
     include: { user: true },
   });
 
+  // 수정 - error message 보내기
   if (!foundToken) return res.json({ ok: false });
   req.session.user = {
     id: foundToken?.userId,
@@ -29,4 +30,10 @@ async function handler(
   return res.json({ ok: true });
 }
 
-export default withApiSession(withHandler('POST', handler));
+export default withApiSession(
+  withHandler({
+    method: 'POST',
+    fn: handler,
+    isPrivate: false,
+  })
+);

@@ -47,8 +47,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log(sendMail);
 
   return res.json({
-		ok:true
-	})
+    ok: true,
+  });
 }
 
-export default withHandler('POST', handler);
+export default withHandler({
+  method: 'POST',
+  fn: handler,
+  isPrivate: false,
+});
