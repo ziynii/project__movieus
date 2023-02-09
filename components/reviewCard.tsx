@@ -7,7 +7,7 @@ interface IReviewCardProps {
 
 export default function ReviewCard({ showPoster }: IReviewCardProps) {
   return (
-    <li className="last:border-0 border-b border-gray-400 py-6">
+    <li className="border-b border-gray-400 py-6 last:border-0">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="h-14 w-14 rounded-full bg-gray-400" />
@@ -20,11 +20,11 @@ export default function ReviewCard({ showPoster }: IReviewCardProps) {
           <svg
             fill="none"
             stroke="currentColor"
-            stroke-width="1.5"
+            strokeWidth="1.5"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
-            className="mr-1 md:mr-3 h-4 w-4 md:h-6 md:w-6"
+            className="mr-1 h-4 w-4 md:mr-3 md:h-6 md:w-6"
           >
             <path
               strokeLinecap="round"
