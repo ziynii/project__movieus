@@ -52,7 +52,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export default withHandler({
-  method: 'POST',
+  methods: ['POST'],
   fn: handler,
   isPrivate: false,
 });
