@@ -1,20 +1,16 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import useSWR from 'swr';
+
 
 export default function useUser() {
-  const [user, setUser] = useState();
+  const { data, error } = useSWR('/api/users/me');
   const router = useRouter();
-
   useEffect(() => {
-    fetch('/api/users/me')
-      .then((res) => res.json())
-      .then((result) => {
-        if (!result.ok) {
-          return router.push('/login');
-        }
-        setUser(result.profile);
-      });
-  }, [router]);
+    if (data && !data.ok) {
+      router.replace('/login');
+    }
+  }, [data, router]);
 
-  return user;
+  return { user: data?.profile, isLoading: !data && !error };
 }
