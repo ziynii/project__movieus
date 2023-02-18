@@ -13,7 +13,6 @@ interface ITabListProps {
 }
 
 export default function TabList({ list, item, page }: ITabListProps) {
-  console.log(list);
   return (
     <div>
       <ul className="flex justify-between ">
