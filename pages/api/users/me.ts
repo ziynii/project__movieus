@@ -7,18 +7,22 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-
   const profile = await client.user.findUnique({
     where: {
       id: req.session.user?.id,
     },
+		include : {
+			reviews: {
+				select: {
+					id: true
+				}
+			}
+		}
   });
   res.json({
     ok: true,
     profile,
   });
-
-  return res.status(200).end();
 }
 
 export default withApiSession(
