@@ -3,12 +3,12 @@ import MovieCard from '@/components/movieCard';
 import SearchBox from '@/components/searchBox';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { IMovie } from '..';
+import { ICardMovie } from '..';
 import useSWR from 'swr';
 
 interface ISearchResponse {
   ok: boolean;
-  searchResult: IMovie[];
+  searchResult: ICardMovie[];
 }
 
 export default function Search() {

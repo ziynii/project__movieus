@@ -4,7 +4,7 @@ import SearchBox from '@/components/searchBox';
 import React from 'react';
 import useSWR from 'swr';
 
-export interface IMovie {
+export interface ICardMovie {
   id: number;
   title: string;
   poster_path: string;
@@ -17,12 +17,12 @@ export interface IMovie {
 
 interface IPopular {
   ok: boolean;
-  popular: IMovie[];
+  popular: ICardMovie[];
 }
 
 interface IRate {
   ok: boolean;
-  rate: IMovie[];
+  rate: ICardMovie[];
 }
 
 export default function Home() {
@@ -42,7 +42,7 @@ export default function Home() {
             <p className="text-2xl font-bold">실시간 인기 영화</p>
             <div className="overflow-x-auto scrollbar scrollbar-track-indigo-100 scrollbar-thumb-indigo-500 scrollbar-track-rounded-lg scrollbar-thumb-rounded-lg scrollbar-h-3">
               <ul className="mt-8 flex w-[1920px] space-x-2 pb-6  md:space-x-3">
-                {popularData?.popular?.map((movie: IMovie) => (
+                {popularData?.popular?.map((movie: ICardMovie) => (
                   <MovieCard key={movie.id} movie={movie} />
                 ))}
               </ul>
@@ -52,7 +52,7 @@ export default function Home() {
             <p className="text-2xl font-bold">평점이 높은 영화</p>
             <div className="overflow-x-auto scrollbar scrollbar-track-indigo-100 scrollbar-thumb-indigo-500 scrollbar-track-rounded-lg scrollbar-thumb-rounded-lg scrollbar-h-3">
               <ul className="mt-8 flex w-[1920px] space-x-2 pb-6  md:space-x-3">
-                {rateData?.rate.map((movie: IMovie) => (
+                {rateData?.rate.map((movie: ICardMovie) => (
                   <MovieCard key={movie.id} movie={movie} />
                 ))}
               </ul>
