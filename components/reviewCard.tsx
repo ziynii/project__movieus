@@ -1,19 +1,23 @@
+import { makeDate, makeImagePath } from '@/libs/client/utils';
+import { ReviewWithUser } from '@/pages/movies/[id]/reviews';
+import Image from 'next/image';
 import React from 'react';
 import Rate from './rate';
 
 interface IReviewCardProps {
   showPoster?: boolean;
+  review: ReviewWithUser;
 }
 
-export default function ReviewCard({ showPoster }: IReviewCardProps) {
+export default function ReviewCard({ showPoster, review }: IReviewCardProps) {
   return (
     <li className="border-b border-gray-400 py-6 last:border-0">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="h-14 w-14 rounded-full bg-gray-400" />
           <div className="ml-4">
-            <p className="text-sm font-medium">이름</p>
-            <span className="text-xs text-gray-300">날짜</span>
+            <p className="text-sm font-medium">{review?.user?.name}</p>
+            <span className="text-xs text-gray-300">{makeDate(review?.createdAt)}</span>
           </div>
         </div>
         <button className="flex items-center rounded-md border border-indigo-500 bg-indigo-50 px-3 py-2 text-xs font-medium text-indigo-500 hover:bg-indigo-100 md:px-4 md:py-2 md:text-base">
@@ -36,11 +40,19 @@ export default function ReviewCard({ showPoster }: IReviewCardProps) {
         </button>
       </div>
 
-      <Rate rate={3} />
+      <Rate rate={review.rate} />
 
       <div className={'mt-4 md:mt-6' + (showPoster ? ' flex items-start' : '')}>
         {showPoster && (
-          <div className="h-32 w-20 shrink-0 bg-gray-400 md:h-36 md:w-24" />
+          <div className="relative h-32 w-20 shrink-0 md:h-36 md:w-24">
+            <Image
+              src={makeImagePath(review?.posterUrl)}
+              alt={'리뷰'}
+              fill
+              sizes="100%"
+              priority={true}
+            />
+          </div>
         )}
         <pre
           className={
@@ -48,9 +60,7 @@ export default function ReviewCard({ showPoster }: IReviewCardProps) {
             (showPoster ? ' ml-4 w-full' : '')
           }
         >
-          Tempor sed vulputate enim gravida. Condimentum cras at quisque duis
-          tortor a. Venenatis neque blandit nunc proin arcu mi habitant. Platea
-          mi posuere sociis sem egestas. Quam vitae feugiat egestas nec.
+          {review.review}
         </pre>
       </div>
     </li>
