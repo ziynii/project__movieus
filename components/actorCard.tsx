@@ -10,7 +10,7 @@ interface IActorCardProps {
 export default function ActorCard({cast}:IActorCardProps) {
   return (
     <li className='flex'>
-      <div className="h-12 w-12 rounded-full overflow-hidden relative">
+      <div className="h-12 w-12 z-10 rounded-full overflow-hidden relative">
 			<Image
             src={makeImagePath(cast?.profile_path)}
             alt={'배우 프로필 사진'}
