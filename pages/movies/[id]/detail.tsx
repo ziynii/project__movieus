@@ -18,9 +18,10 @@ interface IDetailMovie {
   overview: string;
   runtime: number;
   release_date: string;
+	poster_path: string;
 }
 
-interface ISWRDetailData {
+export interface ISWRDetailData {
   ok: boolean;
   movie: IDetailMovie;
 }
