@@ -23,6 +23,11 @@ async function handler(
             avatar: true,
           },
         },
+        _count: {
+          select: {
+            like: true,
+          },
+        },
       },
       where: {
         movieId: Number(id),
@@ -46,7 +51,7 @@ async function handler(
         movieId: Number(id),
         rate: Number(rate),
         review,
-				posterUrl
+        posterUrl,
       },
     });
 
