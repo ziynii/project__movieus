@@ -1,4 +1,5 @@
 import MovieLayout, { ISWRCastData } from '@/components/layout/movieLayout';
+import { MovieLike } from '@prisma/client';
 import { useRouter } from 'next/router';
 import React from 'react';
 import useSWR from 'swr';
@@ -12,13 +13,15 @@ interface IVideo {
   key: string;
 }
 
-interface IDetailMovie {
+export interface IDetailMovie {
   id: number;
+  title: string;
   genres: IGenre[];
   overview: string;
   runtime: number;
   release_date: string;
-	poster_path: string;
+  poster_path: string;
+  backdrop_path: string;
 }
 
 export interface ISWRDetailData {
