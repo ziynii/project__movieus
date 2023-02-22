@@ -33,13 +33,18 @@ export default function Home() {
     <Layout>
       <div>
         <div className="relative h-96 w-full">
-					<div className='absolute top-0 left-0 w-full h-full bg-gradient-to-l from-transparent to-gray-900 z-10'>
-						<div className='absolute bottom-8 left-6'>
-							<p className='text-3xl font-bold'>{popularData?.popular[0].title!}</p>
-							<button className="mt-3 flex rounded-full bg-indigo-700 px-4 py-1 text-center text-xs"><Link href={`/movies/${popularData?.popular[0].id!}/detail`}>자세히 보기</Link></button>
-						</div>
-				
-					</div>
+          <div className="absolute top-0 left-0 z-10 h-full w-full bg-gradient-to-l from-transparent to-gray-900">
+            <div className="absolute bottom-8 left-6">
+              <p className="text-3xl font-bold">
+                {popularData?.popular[0].title!}
+              </p>
+              <button className="mt-3 flex rounded-full bg-indigo-500 px-4 py-1 text-center text-xs hover:bg-indigo-700">
+                <Link href={`/movies/${popularData?.popular[0].id!}/detail`}>
+                  자세히 보기
+                </Link>
+              </button>
+            </div>
+          </div>
           <Image
             src={makeImagePath(popularData?.popular[0].backdrop_path!)}
             alt={popularData?.popular[0].title!}

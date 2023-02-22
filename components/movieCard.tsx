@@ -12,7 +12,7 @@ export default function MovieCard({ movie }: IMovieCardProps) {
   return (
     <li className="w-full cursor-pointer">
       <Link href={`/movies/${movie.id}/detail`}>
-        <div className="relative w-full pb-[150%]">
+        <div className="relative w-full pb-[150%] hover:opacity-70">
           <Image
             src={makeImagePath(movie.poster_path! || movie.posterUrl!)}
             alt={movie.title}
