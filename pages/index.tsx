@@ -1,18 +1,18 @@
 import Layout from '@/components/layout/layout';
 import MovieCard from '@/components/movieCard';
 import SearchBox from '@/components/searchBox';
+import { makeImagePath } from '@/libs/client/utils';
+import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import useSWR from 'swr';
 
 export interface ICardMovie {
   id: number;
   title: string;
-  poster_path: string;
-  overview: string;
-  adult: boolean;
-  backdrop_path: string;
-  relase_date: string;
-  genre_ids: number[];
+  poster_path?: string;
+  posterUrl?: string;
+  backdrop_path?: string;
 }
 
 interface IPopular {
@@ -32,7 +32,25 @@ export default function Home() {
   return (
     <Layout>
       <div>
-        <div className="h-96 w-full bg-gray-400" />
+        <div className="relative h-96 w-full">
+					<div className='absolute top-0 left-0 w-full h-full bg-gradient-to-l from-transparent to-gray-900 z-10'>
+						<div className='absolute bottom-8 left-6'>
+							<p className='text-3xl font-bold'>{popularData?.popular[0].title!}</p>
+							<button className="mt-3 flex rounded-full bg-indigo-700 px-4 py-1 text-center text-xs"><Link href={`/movies/${popularData?.popular[0].id!}/detail`}>자세히 보기</Link></button>
+						</div>
+				
+					</div>
+          <Image
+            src={makeImagePath(popularData?.popular[0].backdrop_path!)}
+            alt={popularData?.popular[0].title!}
+            fill={true}
+            sizes="(max-width: 768px) 100vw,
+						(max-width: 1200px) 50vw,
+						33vw"
+            className="object-cover object-center"
+            priority={true}
+          />
+        </div>
         <div className="px-4 py-12">
           <div className="relative mx-auto w-3/5">
             <SearchBox />
