@@ -1,12 +1,9 @@
-import useMutation from '@/libs/client/useMutation';
-import { User } from '@prisma/client';
 import React from 'react';
+import useMutation from '@/libs/client/useMutation';
 import useSWR from 'swr';
-
-interface IUserModalProps {
-  setOpenUserModal: (value: boolean) => void;
-  userId: number;
-}
+import { User } from '@prisma/client';
+import { openUserModalState, userIdState } from '@/recoil/states';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
 
 interface IUserWithCount extends User {
   _count: {
@@ -21,13 +18,11 @@ interface ISWRUserData {
   userInfo: IUserWithCount;
 }
 
-export default function UserModal({
-  setOpenUserModal,
-  userId,
-}: IUserModalProps) {
+export default function UserModal() {
+  const userId = useRecoilValue(userIdState);
   const { data } = useSWR<ISWRUserData>(`/api/users/${userId}`);
   const [follow, { loading }] = useMutation(`/api/users/follow`);
-  console.log(data);
+  const setIsOpenUserModal = useSetRecoilState(openUserModalState);
 
   const handleFollow = () => {
     if (loading) return;
@@ -69,7 +64,7 @@ export default function UserModal({
             친구 추가
           </button>
           <button
-            onClick={() => setOpenUserModal(false)}
+            onClick={() => setIsOpenUserModal(false)}
             className="basis-[49%] rounded border border-indigo-500 bg-white px-4 py-2 text-xs text-indigo-500 hover:bg-indigo-100 md:px-8 md:py-4 md:text-base"
           >
             돌아가기
