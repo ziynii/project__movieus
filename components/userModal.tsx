@@ -4,6 +4,7 @@ import useSWR from 'swr';
 import { User } from '@prisma/client';
 import { openUserModalState, userIdState } from '@/recoil/states';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
+import Link from 'next/link';
 
 interface IUserWithCount extends User {
   _count: {
@@ -16,6 +17,7 @@ interface IUserWithCount extends User {
 interface ISWRUserData {
   ok: boolean;
   userInfo: IUserWithCount;
+  isCurrentUser: boolean;
 }
 
 export default function UserModal() {
@@ -57,12 +59,18 @@ export default function UserModal() {
           </div>
         </div>
         <div className="mt-4 flex justify-between p-2">
-          <button
-            onClick={handleFollow}
-            className="basis-[49%] rounded bg-indigo-500 px-4 py-2 text-xs hover:bg-indigo-700 md:px-8 md:py-4 md:text-base"
-          >
-            친구 추가
-          </button>
+          {data?.isCurrentUser === false ? (
+            <button
+              onClick={handleFollow}
+              className="basis-[49%] rounded bg-indigo-500 px-4 py-2 text-xs hover:bg-indigo-700 md:px-8 md:py-4 md:text-base"
+            >
+              친구 추가
+            </button>
+          ) : (
+            <button className="basis-[49%] rounded bg-indigo-500 px-4 py-2 text-xs hover:bg-indigo-700 md:px-8 md:py-4 md:text-base">
+              <Link href="/mypage/reviews">마이페이지</Link>
+            </button>
+          )}
           <button
             onClick={() => setIsOpenUserModal(false)}
             className="basis-[49%] rounded border border-indigo-500 bg-white px-4 py-2 text-xs text-indigo-500 hover:bg-indigo-100 md:px-8 md:py-4 md:text-base"
