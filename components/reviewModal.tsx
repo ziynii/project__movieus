@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { Review } from '@prisma/client';
 
 interface IReviewModalProps {
-  setOpenModal: (value: boolean) => void;
+  setOpenPostModal: (value: boolean) => void;
   setSendReview: (value: boolean) => void;
   poster: string;
 }
@@ -18,8 +18,8 @@ interface IReview {
 
 export default function ReviewModal({
   setSendReview,
-  setOpenModal,
-	poster
+  setOpenPostModal,
+  poster,
 }: IReviewModalProps) {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
@@ -41,9 +41,9 @@ export default function ReviewModal({
   useEffect(() => {
     if (data && data.ok) {
       setSendReview(true);
-      setOpenModal(false);
+      setOpenPostModal(false);
     }
-  }, [data, setSendReview, setOpenModal]);
+  }, [data, setOpenPostModal, setSendReview]);
 
   return (
     <div className="fixed top-0 left-0 z-50 flex h-screen w-screen items-center justify-center bg-slate-700 bg-opacity-40">
@@ -86,7 +86,7 @@ export default function ReviewModal({
               리뷰 등록하기
             </button>
             <button
-              onClick={() => setOpenModal(false)}
+              onClick={() => setOpenPostModal(false)}
               className="basis-[49%] rounded border border-indigo-500 bg-white px-4 py-2 text-xs text-indigo-500 hover:bg-indigo-100 md:px-8 md:py-4 md:text-base"
             >
               취소
