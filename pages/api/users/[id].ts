@@ -27,9 +27,18 @@ async function handler(
     },
   });
 
+  let isCurrentUser;
+
+  if (userInfo?.id === user?.id) {
+    isCurrentUser = true;
+  } else {
+    isCurrentUser = false;
+  }
+
   res.json({
     ok: true,
     userInfo,
+    isCurrentUser,
   });
 }
 
