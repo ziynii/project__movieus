@@ -1,15 +1,37 @@
 import MypageLayout from '@/components/layout/mypageLayout';
 import UserCard from '@/components/userCard';
 import React from 'react';
+import useSWR from 'swr';
+import { useRecoilValue } from 'recoil';
+import { openUserModalState } from '@/recoil/states';
+import UserModal from '@/components/userModal';
+
+interface IFollowUser {
+  followFor: {
+    id: number;
+    avatar: string | null;
+    name: string;
+  };
+}
+
+interface ISWRFollowingData {
+  ok: boolean;
+  followings: IFollowUser[];
+}
 
 export default function Following() {
+  const { data } = useSWR<ISWRFollowingData>(`/api/users/me/following`);
+  const isOpenUserModal = useRecoilValue(openUserModalState);
+
   return (
     <MypageLayout tabValue="팔로잉">
-      <ul className="grid md:py-4 grid-cols-3 md:grid-cols-4 gap-y-4">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((card, i) => (
-          <UserCard key={i} />
+      <ul className="grid grid-cols-3 gap-y-4 md:grid-cols-4 md:py-4">
+        {data?.followings.map((user) => (
+          <UserCard key={user?.followFor?.id} user={user?.followFor} />
         ))}
       </ul>
+
+      {isOpenUserModal ? <UserModal /> : null}
     </MypageLayout>
   );
 }
