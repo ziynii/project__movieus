@@ -3,13 +3,13 @@ import React, { useEffect } from 'react';
 import { KeyedMutator } from 'swr';
 
 interface IRemoveModalProps {
-  setIsOpenModal: (value: boolean) => void;
+  setOpenRemoveModal: (value: boolean) => void;
   reviewId: number;
   mutate: KeyedMutator<any>;
 }
 
 export default function RemoveModal({
-  setIsOpenModal,
+  setOpenRemoveModal,
   reviewId,
   mutate,
 }: IRemoveModalProps) {
@@ -23,9 +23,9 @@ export default function RemoveModal({
   useEffect(() => {
     if (data && data.ok) {
       mutate();
-      setIsOpenModal(false);
+      setOpenRemoveModal(false);
     }
-  }, [data, mutate, setIsOpenModal]);
+  }, [data, mutate, setOpenRemoveModal]);
 
   return (
     <div className="fixed top-0 left-0 z-50 flex h-screen w-screen items-center justify-center bg-slate-700 bg-opacity-40">
@@ -41,7 +41,7 @@ export default function RemoveModal({
             삭제
           </button>
           <button
-            onClick={() => setIsOpenModal(false)}
+            onClick={() => setOpenRemoveModal(false)}
             className="basis-[49%] rounded border border-indigo-500 bg-white px-4 py-2 text-xs text-indigo-500 hover:bg-indigo-100 md:px-8 md:py-4 md:text-base"
           >
             취소
