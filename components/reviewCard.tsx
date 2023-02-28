@@ -4,14 +4,15 @@ import { ReviewWithUser } from '@/pages/movies/[id]/reviews';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import { openUserModalState, userIdState } from '@/recoil/states';
+import { useSetRecoilState } from 'recoil';
 import Rate from './rate';
 
 interface IReviewCardProps {
   showPoster?: boolean;
   review: ReviewWithUser;
   type: string;
-  setIsOpenModal?: (value: boolean) => void;
+  setOpenRemoveModal?: (value: boolean) => void;
   setReviewId?: (value: number) => void;
 }
 
@@ -19,10 +20,12 @@ export default function ReviewCard({
   showPoster,
   review,
   type,
-  setIsOpenModal,
+  setOpenRemoveModal,
   setReviewId,
 }: IReviewCardProps) {
   const router = useRouter();
+  const setIsOpenUserModal = useSetRecoilState(openUserModalState);
+  const setUserId = useSetRecoilState(userIdState);
   const [like, { loading }] = useMutation(
     `/api/movies/${router.query.id}/reviews/like`
   );
@@ -33,15 +36,28 @@ export default function ReviewCard({
   };
 
   const handleRemove = () => {
-    setIsOpenModal && setIsOpenModal(true);
+    setOpenRemoveModal && setOpenRemoveModal(true);
     setReviewId && setReviewId(review.id);
+  };
+
+  const handleUser = () => {
+    if (type == 'likes') {
+      setIsOpenUserModal(true);
+      setUserId(review?.user?.id);
+    }
   };
 
   return (
     <li className="border-b border-gray-400 py-6 last:border-0">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <div className="h-14 w-14 rounded-full bg-gray-400" />
+          <div
+            className={
+              'h-14 w-14 rounded-full bg-gray-400' +
+              (type === 'likes' ? ' cursor-pointer' : '')
+            }
+            onClick={handleUser}
+          />
           <div className="ml-4">
             <p className="text-sm font-medium">{review?.user?.name}</p>
             <span className="text-xs text-gray-300">
