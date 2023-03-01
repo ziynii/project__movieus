@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useMutation from '@/libs/client/useMutation';
 import useSWR from 'swr';
-import { User } from '@prisma/client';
+import { Follow, User } from '@prisma/client';
 import { openUserModalState, userIdState } from '@/recoil/states';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import Link from 'next/link';
@@ -14,22 +14,34 @@ interface IUserWithCount extends User {
   };
 }
 
+interface IFollowResponse {
+  ok: boolean;
+}
+
 interface ISWRUserData {
   ok: boolean;
   userInfo: IUserWithCount;
   isCurrentUser: boolean;
+  isAlreadyFollow?: Follow[];
 }
 
 export default function UserModal() {
   const userId = useRecoilValue(userIdState);
-  const { data } = useSWR<ISWRUserData>(`/api/users/${userId}`);
-  const [follow, { loading }] = useMutation(`/api/users/follow`);
+  const { data, mutate } = useSWR<ISWRUserData>(`/api/users/${userId}`);
+  const [follow, { loading, data: followData }] =
+    useMutation<IFollowResponse>(`/api/users/follow`);
   const setIsOpenUserModal = useSetRecoilState(openUserModalState);
 
   const handleFollow = () => {
     if (loading) return;
     follow({ followFor: userId });
   };
+
+  useEffect(() => {
+    if (followData && followData.ok) {
+      mutate();
+    }
+  }, [followData, mutate]);
 
   return (
     <div className="fixed top-0 left-0 z-50 flex h-screen w-screen items-center justify-center bg-slate-700 bg-opacity-40">
@@ -64,10 +76,13 @@ export default function UserModal() {
               onClick={handleFollow}
               className="basis-[49%] rounded bg-indigo-500 px-4 py-2 text-xs hover:bg-indigo-700 md:px-8 md:py-4 md:text-base"
             >
-              친구 추가
+              {data?.isAlreadyFollow ? '친구 끊기' : '친구 추가'}
             </button>
           ) : (
-            <button className="basis-[49%] rounded bg-indigo-500 px-4 py-2 text-xs hover:bg-indigo-700 md:px-8 md:py-4 md:text-base">
+            <button
+              onClick={() => setIsOpenUserModal(false)}
+              className="basis-[49%] rounded bg-indigo-500 px-4 py-2 text-xs hover:bg-indigo-700 md:px-8 md:py-4 md:text-base"
+            >
               <Link href="/mypage/reviews">마이페이지</Link>
             </button>
           )}
