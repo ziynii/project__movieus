@@ -14,13 +14,13 @@ interface IFollowUser {
   };
 }
 
-interface ISWRFollowingData {
+interface IFollowerResponse {
   ok: boolean;
   followers: IFollowUser[];
 }
 
-export default function Following() {
-  const { data } = useSWR<ISWRFollowingData>(`/api/users/me/follower`);
+export default function Follower() {
+  const { data } = useSWR<IFollowerResponse>(`/api/users/me/follower`);
   const isOpenUserModal = useRecoilValue(openUserModalState);
 
   return (

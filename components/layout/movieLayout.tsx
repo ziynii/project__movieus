@@ -23,7 +23,7 @@ interface IDetail {
   isLike: MovieLike;
 }
 
-export interface ISWRCastData {
+export interface ICastResponse {
   ok: boolean;
   director: ICast[];
   casts: ICast[];
@@ -44,7 +44,7 @@ export default function MovieLayout({
   const { data } = useSWR<IDetail>(
     router.query.id ? `/api/movies/${router.query.id}/detail` : null
   );
-  const { data: credits } = useSWR<ISWRCastData>(
+  const { data: credits } = useSWR<ICastResponse>(
     id ? `/api/movies/${id}/credits` : null
   );
 

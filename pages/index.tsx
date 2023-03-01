@@ -20,14 +20,14 @@ interface IPopular {
   popular: ICardMovie[];
 }
 
-interface IRate {
+interface IRateResponse {
   ok: boolean;
   rate: ICardMovie[];
 }
 
 export default function Home() {
   const { data: popularData } = useSWR<IPopular>('/api/movies/popular');
-  const { data: rateData } = useSWR<IRate>('/api/movies/rate');
+  const { data: rateData } = useSWR<IRateResponse>('/api/movies/rate');
 
   return (
     <Layout>

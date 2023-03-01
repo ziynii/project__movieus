@@ -9,8 +9,13 @@ interface IMovieLike {
   posterUrl: string;
 }
 
+interface IFavResponse {
+  ok: boolean;
+  myFavMovies: IMovieLike[];
+}
+
 export default function Like() {
-  const { data } = useSWR(`/api/users/fav`);
+  const { data } = useSWR<IFavResponse>(`/api/users/me/fav`);
 
   return (
     <MypageLayout tabValue="찜 한 영화">

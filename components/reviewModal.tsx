@@ -11,7 +11,7 @@ interface IReviewModalProps {
   poster: string;
 }
 
-interface IReview {
+interface IReviewResponse {
   ok: boolean;
   review: Review;
 }
@@ -24,7 +24,7 @@ export default function ReviewModal({
   const { register, handleSubmit } = useForm();
   const router = useRouter();
   const [rate, setRate] = useState('1');
-  const [sendReview, { data, loading }] = useMutation<IReview>(
+  const [sendReview, { data, loading }] = useMutation<IReviewResponse>(
     `/api/movies/${router.query.id}/reviews`
   );
 

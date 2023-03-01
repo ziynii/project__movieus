@@ -1,4 +1,4 @@
-import MovieLayout, { ISWRCastData } from '@/components/layout/movieLayout';
+import MovieLayout, { ICastResponse } from '@/components/layout/movieLayout';
 import { MovieLike } from '@prisma/client';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -24,12 +24,12 @@ export interface IDetailMovie {
   backdrop_path: string;
 }
 
-export interface ISWRDetailData {
+export interface IDetailResponse {
   ok: boolean;
   movie: IDetailMovie;
 }
 
-interface ISWRVideoData {
+interface IVideoResponse {
   ok: boolean;
   foundVideo: IVideo[];
   error?: string;
@@ -38,15 +38,15 @@ interface ISWRVideoData {
 export default function Detail() {
   const router = useRouter();
   const { id } = router.query;
-  const { data } = useSWR<ISWRDetailData>(
+  const { data } = useSWR<IDetailResponse>(
     id ? `/api/movies/${id}/detail` : null
   );
-  const { data: video } = useSWR<ISWRVideoData>(
+  const { data: video } = useSWR<IVideoResponse>(
     id ? `/api/movies/${id}/video` : null
   );
   const videoId = video?.foundVideo[0]?.key;
 
-  const { data: credits } = useSWR<ISWRCastData>(
+  const { data: credits } = useSWR<ICastResponse>(
     id ? `/api/movies/${id}/credits` : null
   );
 
