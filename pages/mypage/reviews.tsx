@@ -3,11 +3,11 @@ import RemoveModal from '@/components/removeModal';
 import ReviewCard from '@/components/reviewCard';
 import React, { useState } from 'react';
 import useSWR from 'swr';
-import { ReviewWithUser } from '../movies/[id]/reviews';
+import { IReviewResponse, ReviewWithUser } from '../movies/[id]/reviews';
 
 export default function Reviews() {
-  const { data, mutate } = useSWR(`/api/users/reviews`);
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const { data, mutate } = useSWR<IReviewResponse>(`/api/users/reviews`);
+  const [openRemoveModal, setOpenRemoveModal] = useState(false);
   const [reviewId, setReviewId] = useState(0);
 
   return (
@@ -19,14 +19,18 @@ export default function Reviews() {
             review={review}
             showPoster
             type="remove"
-            setIsOpenModal={setIsOpenModal}
+            setOpenRemoveModal={setOpenRemoveModal}
             setReviewId={setReviewId}
           />
         ))}
       </ul>
 
-      {isOpenModal ? (
-        <RemoveModal mutate={mutate} reviewId={reviewId} setIsOpenModal={setIsOpenModal} />
+      {openRemoveModal ? (
+        <RemoveModal
+          mutate={mutate}
+          reviewId={reviewId}
+          setOpenRemoveModal={setOpenRemoveModal}
+        />
       ) : null}
     </MypageLayout>
   );
