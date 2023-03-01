@@ -1,30 +1,37 @@
 import MovieLayout from '@/components/layout/movieLayout';
 import ReviewCard from '@/components/reviewCard';
 import ReviewModal from '@/components/reviewModal';
+import UserModal from '@/components/userModal';
 import { Review, User } from '@prisma/client';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { ISWRDetailData } from './detail';
+import { IDetailResponse } from './detail';
+import { useRecoilValue } from 'recoil';
+import { openUserModalState } from '@/recoil/states';
 
 export interface ReviewWithUser extends Review {
   user: User;
+  _count: {
+    like: number;
+  };
 }
 
-interface ISWRReviewData {
+export interface IReviewResponse {
   ok: boolean;
   reviews: ReviewWithUser[];
 }
 
 export default function Reviews() {
-  const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
   const { id } = router.query;
+  const isOpenUserModal = useRecoilValue(openUserModalState);
+  const [openPostModal, setOpenPostModal] = useState(false);
   const [sendReview, setSendReview] = useState(false);
-  const { data, mutate } = useSWR<ISWRReviewData>(
+  const { data, mutate } = useSWR<IReviewResponse>(
     id ? `/api/movies/${id}/reviews` : null
   );
-  const { data: movieData } = useSWR<ISWRDetailData>(
+  const { data: movieData } = useSWR<IDetailResponse>(
     id ? `/api/movies/${id}/detail` : null
   );
 
@@ -32,7 +39,6 @@ export default function Reviews() {
     if (data) {
       let arr: number[] = [];
       data?.reviews?.map((review) => arr.push(review.rate));
-      console.log(arr);
 
       const rateTotal = arr.reduce((sum, current) => sum + current, 0);
       const rateAverage = rateTotal / data?.reviews?.length;
@@ -82,25 +88,30 @@ export default function Reviews() {
       <div className="mt-10 flex items-center justify-between">
         <p className="text-base font-bold">리뷰 {data?.reviews.length}개</p>
         <button
-          onClick={() => setOpenModal(true)}
+          onClick={() => setOpenPostModal(true)}
           className="text-base font-bold text-indigo-500 "
         >
           리뷰쓰기
         </button>
       </div>
 
-      {openModal === true ? (
+      {openPostModal ? (
         <ReviewModal
           setSendReview={setSendReview}
-          setOpenModal={setOpenModal}
-					poster={movieData?.movie?.poster_path!}
+          setOpenPostModal={setOpenPostModal}
+          poster={movieData?.movie?.poster_path!}
         />
       ) : null}
 
+      {isOpenUserModal ? <UserModal /> : null}
+
       <ul className="py-6">
         {data?.reviews?.map((review: ReviewWithUser) => (
-          <ReviewCard key={review.id} review={review} />
+          <ReviewCard key={review.id} review={review} type="likes" />
         ))}
+        {data?.reviews?.length === 0 ? (
+          <p className="py-32 text-center">아직 작성된 리뷰가 없어요</p>
+        ) : null}
       </ul>
     </MovieLayout>
   );
