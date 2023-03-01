@@ -17,6 +17,7 @@ async function handler(
       id: Number(id),
     },
     include: {
+      following: true,
       _count: {
         select: {
           reviews: true,
@@ -35,11 +36,17 @@ async function handler(
     isCurrentUser = false;
   }
 
-  res.json({
-    ok: true,
-    userInfo,
-    isCurrentUser,
-  });
+  const isAlreadyFollow = userInfo?.following?.find(
+    (follow) => follow.followById === user?.id
+  );
+
+  if (userInfo?.following)
+    res.json({
+      ok: true,
+      userInfo,
+      isCurrentUser,
+      isAlreadyFollow,
+    });
 }
 
 export default withApiSession(
