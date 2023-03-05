@@ -30,7 +30,7 @@ async function handler(
     });
   }
 
-  if (req.method === 'POST') {
+  if (req.method === 'PUT') {
     const { name, about } = req.body;
     const currentUser = await client.user.findUnique({
       where: {
@@ -47,9 +47,6 @@ async function handler(
           name,
         },
       });
-      res.json({
-        ok: true,
-      });
     }
 
     if (about !== currentUser?.about) {
@@ -61,9 +58,6 @@ async function handler(
           about,
         },
       });
-      res.json({
-        ok: true,
-      });
     }
 
     res.json({ ok: true });
@@ -72,7 +66,7 @@ async function handler(
 
 export default withApiSession(
   withHandler({
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'PUT'],
     fn: handler,
     isPrivate: true,
   })
