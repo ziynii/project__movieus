@@ -8,7 +8,7 @@ interface IInputProps {
   register: UseFormRegisterReturn;
   required: boolean;
   kind?: 'text' | 'email' | 'search';
-  placeholder: string;
+  placeholder?: string;
   disabled?: boolean;
 }
 
@@ -39,7 +39,7 @@ export default function Input({
           placeholder={placeholder}
           className={
             'flex-grow px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900' +
-            (name === 'search' ? ' rounded-full' : 'rounded')
+            (name === 'search' ? ' rounded-full' : ' rounded')
           }
         />
       ) : null}
