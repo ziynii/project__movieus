@@ -2,12 +2,13 @@ import Input from '@/components/input';
 import Layout from '@/components/layout/layout';
 import useMutation from '@/libs/client/useMutation';
 import useUser from '@/libs/client/useUser';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface IEditProfileForm {
   name?: string;
   about?: string;
+  avatar?: FileList;
   formErrors?: string;
 }
 
@@ -22,18 +23,21 @@ export default function Edit() {
     setValue,
     handleSubmit,
     setError,
+    watch,
     formState: { errors },
     clearErrors,
   } = useForm<IEditProfileForm>();
-  const [editProfile, { loading }] =
-    useMutation<IEditProfileResponse>(`/api/users/me`, 'PUT');
+  const [editProfile, { loading }] = useMutation<IEditProfileResponse>(
+    `/api/users/me`,
+    'PUT'
+  );
 
   useEffect(() => {
     setValue('name', user?.name!);
     setValue('about', user?.about!);
   }, [setValue, user]);
 
-  const onValid = ({ name, about }: IEditProfileForm) => {
+  const onValid = ({ name, about, avatar }: IEditProfileForm) => {
     if (loading) return;
     if (name === '' || about === '') {
       return setError('formErrors', {
@@ -42,6 +46,15 @@ export default function Edit() {
     }
     editProfile({ name, about });
   };
+  const [avatarPreview, setAvatarPreview] = useState('');
+  const avatar = watch('avatar');
+
+  useEffect(() => {
+    if (avatar && avatar.length > 0) {
+      const file = avatar[0];
+      setAvatarPreview(URL.createObjectURL(file));
+    }
+  }, [avatar]);
 
   return (
     <Layout>
@@ -50,13 +63,16 @@ export default function Edit() {
           <h4>내 정보 수정</h4>
           <form className="py-10" onSubmit={handleSubmit(onValid)}>
             <div className="flex items-center space-x-3">
-              <div className="h-14 w-14 rounded-full bg-slate-500" />
+              <div className="h-14 w-14 overflow-hidden rounded-full bg-slate-500">
+                <img src={avatarPreview} />
+              </div>
               <label
                 htmlFor="picture"
                 className="cursor-pointer rounded-md border border-indigo-500 py-2 px-3 text-sm font-medium text-indigo-500 shadow-sm hover:bg-indigo-100"
               >
                 이미지 설정
                 <input
+                  {...register('avatar')}
                   id="picture"
                   type="file"
                   className="hidden"
