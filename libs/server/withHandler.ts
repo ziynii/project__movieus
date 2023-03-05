@@ -5,10 +5,10 @@ export interface ResponseType {
   [key: string]: any;
 }
 
-type method = 'GET' | 'POST' | 'DELETE';
+type method = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 interface WithHandlerProps {
-  methods: method[]
+  methods: method[];
   fn: (req: NextApiRequest, res: NextApiResponse) => void;
   isPrivate: boolean;
 }

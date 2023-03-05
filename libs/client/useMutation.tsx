@@ -6,7 +6,8 @@ type UseMutationResult<T> = [
 ];
 
 export default function useMutation<T = any>(
-  url: string
+  url: string,
+  method: 'POST' | 'PUT' = 'POST'
 ): UseMutationResult<T> {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<undefined | any>(undefined);
@@ -14,7 +15,7 @@ export default function useMutation<T = any>(
   function mutation(data: any) {
     setLoading(true);
     fetch(url, {
-      method: 'POST',
+      method,
       headers: {
         'Content-Type': 'application/json',
       },
