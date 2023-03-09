@@ -25,7 +25,7 @@ export default function Follower() {
 
   return (
     <MypageLayout tabValue="팔로워">
-      <ul className="grid grid-cols-3 gap-y-4 md:grid-cols-4 md:pt-4">
+      <ul className="grid grid-cols-3 gap-y-4 md:grid-cols-4 lg:grid-cols-5 md:pt-4">
         {data?.followers?.map((user) => (
           <UserCard user={user?.followBy} key={user?.followBy?.id} />
         ))}
