@@ -19,13 +19,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           create: {
             name,
             email,
+            about: `안녕하세요 ${name}의 페이지 입니다.`,
           },
         },
       },
     },
   });
-
-  console.log(token);
 
   const mailOption = {
     from: process.env.MAIL_ID,
@@ -34,17 +33,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     text: `로그인 인증번호는 ${payload}입니다.`,
   };
 
-//   const sendMail = await smtpTransport.sendMail(mailOption, (error, res) => {
-//     if (error) {
-//       console.log(error);
-//       return null;
-//     } else {
-//       console.log(res);
-//       return null;
-//     }
-//   });
-//   smtpTransport.close();
-//   console.log(sendMail);
+  const sendMail = await smtpTransport.sendMail(mailOption, (error, res) => {
+    if (error) {
+      console.log(error);
+      return null;
+    } else {
+      console.log(res);
+      return null;
+    }
+  });
+  smtpTransport.close();
+  console.log(sendMail);
 
   return res.json({
     ok: true,
