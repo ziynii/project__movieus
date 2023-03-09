@@ -35,10 +35,7 @@ const TABLIST = [
   { link: 'recommend', value: '영화 추천' },
 ];
 
-export default function MovieLayout({
-  children,
-  tabValue,
-}: IMovieLayoutProps) {
+export default function MovieLayout({ children, tabValue }: IMovieLayoutProps) {
   const router = useRouter();
   const { id } = router.query;
   const { data } = useSWR<IDetail>(
@@ -47,7 +44,6 @@ export default function MovieLayout({
   const { data: credits } = useSWR<ICastResponse>(
     id ? `/api/movies/${id}/credits` : null
   );
-
 
   const [fav, { loading }] = useMutation(`/api/movies/${router.query.id}/fav`);
 
@@ -70,29 +66,33 @@ export default function MovieLayout({
       <div className="relative">
         <div className="relative h-80 w-full lg:h-96">
           <div className="absolute top-0 left-0 z-10 h-full w-full bg-gradient-to-b from-transparent to-gray-900" />
-          <Image
-            src={makeImagePath(data?.movie?.backdrop_path!)}
-            alt={'영화 배경 화면'}
-            fill={true}
-            sizes="(max-width: 768px) 100vw,
+          {data?.movie ? (
+            <Image
+              src={makeImagePath(data?.movie?.backdrop_path!)}
+              alt={'영화 배경 화면'}
+              fill={true}
+              sizes="(max-width: 768px) 100vw,
 						(max-width: 1200px) 50vw,
 						33vw"
-            className="object-cover object-center"
-            priority={true}
-          />
+              className="object-cover object-center"
+              priority={true}
+            />
+          ) : null}
         </div>
 
         <div className="lg:relative lg:-top-14 lg:grid lg:grid-cols-5 lg:gap-x-6 lg:px-4">
           <div className="absolute top-44 left-1/2 z-20 flex w-4/5 -translate-x-1/2 items-center lg:relative lg:top-0 lg:left-0 lg:block lg:w-full lg:translate-x-0">
             <div className="relative h-40 w-28 lg:h-72 lg:w-full">
-              <Image
-                src={makeImagePath(data?.movie?.poster_path!)}
-                alt={'영화 포스터'}
-                fill={true}
-                sizes="(max-width: 768px) 100vw,
+              {data?.movie ? (
+                <Image
+                  src={makeImagePath(data?.movie?.poster_path!)}
+                  alt={'영화 포스터'}
+                  fill={true}
+                  sizes="(max-width: 768px) 100vw,
 								(max-width: 1200px) 50vw,
 								33vw"
-              />
+                />
+              ) : null}
             </div>
             <div className="ml-3 lg:ml-0 lg:mt-4">
               <h4 className="text-2xl font-bold lg:text-3xl">
