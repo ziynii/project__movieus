@@ -1,6 +1,7 @@
 import useUser from '@/libs/client/useUser';
 import Link from 'next/link';
 import React from 'react';
+import ProfileImage from '../profileImage';
 import TabList from '../tabList';
 import Layout from './layout';
 
@@ -26,7 +27,9 @@ export default function MypageLayout({
     <Layout>
       <div className="flex justify-between py-8 px-4 md:px-10 lg:px-20">
         <div className="flex flex-col">
-          <div className="h-20 w-20 rounded-full bg-gray-400 md:h-36 md:w-36" />
+          <div className="h-20 w-20 rounded-full relative bg-gray-400 md:h-36 md:w-36">
+            {user?.avatar ? <ProfileImage avatarId={user.avatar!} /> : null}
+          </div>
           <div className="mt-4">
             <p className="mb-2 text-lg font-bold md:text-xl">{user?.name}</p>
             <span className="text-xs md:text-base">{user?.about}</span>

@@ -9,6 +9,7 @@ import { useSetRecoilState } from 'recoil';
 import Rate from './rate';
 import { useEffect, useState } from 'react';
 import { ReviewLike } from '@prisma/client';
+import ProfileImage from './profileImage';
 
 interface IReviewCardProps {
   showPoster?: boolean;
@@ -69,11 +70,13 @@ export default function ReviewCard({
         <div className="flex items-center">
           <div
             className={
-              'h-14 w-14 rounded-full bg-gray-400' +
+              'h-14 w-14 rounded-full bg-gray-400 relative' +
               (type === 'likes' ? ' cursor-pointer' : '')
             }
             onClick={handleUser}
-          />
+          >
+            {review?.user?.avatar ? <ProfileImage avatarId={review.user.avatar!} /> : null}
+          </div>
           <div className="ml-4">
             <p className="text-sm font-medium">{review?.user?.name}</p>
             <span className="text-xs text-gray-300">
