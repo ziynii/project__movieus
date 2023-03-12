@@ -4,7 +4,6 @@ import ActorCard from '../actorCard';
 import TabList from '../tabList';
 import Layout from './layout';
 import useSWR from 'swr';
-import { ICardMovie } from '@/pages';
 import Image from 'next/image';
 import { makeImagePath } from '@/libs/client/utils';
 import { ICast } from '@/pages/api/movies/[id]/credits';
@@ -125,7 +124,7 @@ export default function MovieLayout({ children, tabValue }: IMovieLayoutProps) {
 
           <div className="mt-12 md:mt-20 md:px-20 lg:col-start-2 lg:col-end-5 lg:px-0 ">
             <div className="lg:w-3/5">
-              <TabList list={TABLIST} item={tabValue} page={`movies/${id}`} />
+              <TabList list={TABLIST} item={tabValue} page='movies' id={Number(id)}/>
             </div>
             <div className="px-4 py-8 md:py-12">{children}</div>
           </div>
