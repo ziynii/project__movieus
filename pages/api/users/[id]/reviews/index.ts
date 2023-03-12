@@ -9,6 +9,7 @@ async function handler(
 ) {
   const {
     session: { user },
+    query: { id },
   } = req;
 
   const reviews = await client.review.findMany({
@@ -20,9 +21,14 @@ async function handler(
           avatar: true,
         },
       },
+      _count: {
+        select: {
+          like: true,
+        },
+      },
     },
     where: {
-      userId: user?.id,
+      userId: Number(id),
     },
   });
 
