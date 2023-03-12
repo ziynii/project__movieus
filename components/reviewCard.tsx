@@ -4,8 +4,6 @@ import { ReviewWithUser } from '@/pages/movies/[id]/reviews';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { userIdState } from '@/recoil/states';
-import { useSetRecoilState } from 'recoil';
 import Rate from './rate';
 import { useEffect, useState } from 'react';
 import { ReviewLike } from '@prisma/client';
@@ -32,7 +30,6 @@ export default function ReviewCard({
   setReviewId,
 }: IReviewCardProps) {
   const router = useRouter();
-  const setUserId = useSetRecoilState(userIdState);
   const [like, { loading, data }] = useMutation<ILikeResponse>(
     `/api/movies/${router.query.id}/reviews/like`
   );
@@ -51,7 +48,6 @@ export default function ReviewCard({
   const handleUser = () => {
     if (type == 'likes') {
       router.push(`/users/${review?.user?.id}/reviews`);
-      setUserId(review?.user?.id);
     }
   };
 
