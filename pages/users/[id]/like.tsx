@@ -1,5 +1,6 @@
 import MypageLayout from '@/components/layout/mypageLayout';
 import MovieCard from '@/components/movieCard';
+import { useRouter } from 'next/router';
 import React from 'react';
 import useSWR from 'swr';
 
@@ -15,7 +16,9 @@ interface IFavResponse {
 }
 
 export default function Like() {
-  const { data } = useSWR<IFavResponse>(`/api/users/me/fav`);
+  const router = useRouter();
+  const { id } = router.query;
+  const { data } = useSWR<IFavResponse>(id ? `/api/users/${id}/fav` : null);
 
   return (
     <MypageLayout tabValue="찜 한 영화">
@@ -31,6 +34,10 @@ export default function Like() {
           />
         ))}
       </ul>
+
+      {data?.myFavMovies?.length === 0 ? (
+        <p className="py-32 text-center">아직 찜 한 영화가 없어요</p>
+      ) : null}
     </MypageLayout>
   );
 }

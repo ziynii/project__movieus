@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import { useRecoilValue } from 'recoil';
 import { openUserModalState } from '@/recoil/states';
 import UserModal from '@/components/userModal';
+import { useRouter } from 'next/router';
 
 interface IFollowUser {
   followFor: {
@@ -20,7 +21,11 @@ interface IFollowingResponse {
 }
 
 export default function Following() {
-  const { data } = useSWR<IFollowingResponse>(`/api/users/me/following`);
+  const router = useRouter();
+  const { id } = router.query;
+  const { data } = useSWR<IFollowingResponse>(
+    id ? `/api/users/${id}/following` : null
+  );
   const isOpenUserModal = useRecoilValue(openUserModalState);
 
   return (
@@ -30,6 +35,10 @@ export default function Following() {
           <UserCard key={user?.followFor?.id} user={user?.followFor} />
         ))}
       </ul>
+
+      {data?.followings?.length === 0 ? (
+        <p className="py-32 text-center">친구를 추가해보세요</p>
+      ) : null}
 
       {isOpenUserModal ? <UserModal /> : null}
     </MypageLayout>
