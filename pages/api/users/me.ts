@@ -31,7 +31,7 @@ async function handler(
   }
 
   if (req.method === 'PUT') {
-    const { name, about } = req.body;
+    const { name, about, avatarId } = req.body;
     const currentUser = await client.user.findUnique({
       where: {
         id: user?.id,
@@ -59,6 +59,17 @@ async function handler(
         },
       });
     }
+
+		if(avatarId) {
+			await client.user.update({
+        where: {
+          id: user?.id,
+        },
+        data: {
+          avatar: avatarId,
+        },
+      });
+		}
 
     res.json({ ok: true });
   }
