@@ -4,7 +4,7 @@ import { ReviewWithUser } from '@/pages/movies/[id]/reviews';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { openUserModalState, userIdState } from '@/recoil/states';
+import { userIdState } from '@/recoil/states';
 import { useSetRecoilState } from 'recoil';
 import Rate from './rate';
 import { useEffect, useState } from 'react';
@@ -32,7 +32,6 @@ export default function ReviewCard({
   setReviewId,
 }: IReviewCardProps) {
   const router = useRouter();
-  const setIsOpenUserModal = useSetRecoilState(openUserModalState);
   const setUserId = useSetRecoilState(userIdState);
   const [like, { loading, data }] = useMutation<ILikeResponse>(
     `/api/movies/${router.query.id}/reviews/like`
@@ -51,7 +50,7 @@ export default function ReviewCard({
 
   const handleUser = () => {
     if (type == 'likes') {
-      setIsOpenUserModal(true);
+      router.push(`/users/${review?.user?.id}/reviews`);
       setUserId(review?.user?.id);
     }
   };
@@ -70,12 +69,14 @@ export default function ReviewCard({
         <div className="flex items-center">
           <div
             className={
-              'h-14 w-14 rounded-full bg-gray-400 relative' +
+              'relative h-14 w-14 rounded-full bg-gray-400' +
               (type === 'likes' ? ' cursor-pointer' : '')
             }
             onClick={handleUser}
           >
-            {review?.user?.avatar ? <ProfileImage avatarId={review.user.avatar!} /> : null}
+            {review?.user?.avatar ? (
+              <ProfileImage avatarId={review.user.avatar!} />
+            ) : null}
           </div>
           <div className="ml-4">
             <p className="text-sm font-medium">{review?.user?.name}</p>
