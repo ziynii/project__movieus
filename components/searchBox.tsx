@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '@/components/input';
-import useSWR from 'swr';
 import { useRouter } from 'next/router';
 
 interface ISearchForm {
