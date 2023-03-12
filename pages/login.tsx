@@ -1,6 +1,7 @@
 import Input from '@/components/input';
 import Loading from '@/components/loading';
 import useMutation from '@/libs/client/useMutation';
+import useUser from '@/libs/client/useUser';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -14,22 +15,24 @@ interface ITokenForm {
   token: string;
 }
 
-interface IMutationResult {
+export interface IMutationResponse {
   ok: boolean;
 }
 
 export default function Login() {
+  const user = useUser();
   const router = useRouter();
   const [disabled, setDisabled] = useState(false);
   const [correct, setCorrect] = useState(false);
   const [login, { loading: loginLoading, data: loginData, error: loginError }] =
-    useMutation<IMutationResult>('/api/users/login');
+    useMutation<IMutationResponse>('/api/users/login');
   const [confirmToken, { loading: tokenLoading, data: tokenData }] =
-    useMutation<IMutationResult>('/api/users/confirm');
+    useMutation<IMutationResponse>('/api/users/confirm');
   const { register: emailRegister, handleSubmit: emailHandleSubmit } =
     useForm<IEmailForm>();
   const { register: tokenRegister, handleSubmit: tokenHandleSubmit } =
     useForm<ITokenForm>();
+
   const onEmailValid = (data: IEmailForm) => {
     if (loginLoading) return;
     login(data);
@@ -53,6 +56,12 @@ export default function Login() {
       setCorrect(true);
     }
   }, [tokenData, router]);
+
+  useEffect(() => {
+    if (user && user.user !== null && user.user !== undefined) {
+      router.push('/');
+    }
+  }, [user, router]);
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-tr  from-gray-900 to-indigo-900">
