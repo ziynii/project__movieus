@@ -52,7 +52,7 @@ export default function Header() {
               <ul className="text-sm">
                 <li className="w-full cursor-pointer border-b border-gray-200 hover:bg-indigo-100 hover:font-bold">
                   <Link
-                    href="/mypage/reviews"
+                    href={`/users/${user?.id}/reviews`}
                     className="inline-block h-full w-full px-4 py-2"
                   >
                     마이페이지
@@ -60,7 +60,7 @@ export default function Header() {
                 </li>
                 <li className="w-full cursor-pointer border-b border-gray-200 hover:bg-indigo-100 hover:font-bold">
                   <Link
-                    href="/mypage/edit"
+                    href="/users/edit"
                     className="inline-block h-full w-full px-4 py-2"
                   >
                     프로필 수정
