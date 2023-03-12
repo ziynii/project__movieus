@@ -9,5 +9,5 @@ export function makeDate(dates: Date) {
   const month = dateFormat.getMonth() + 1;
   const date = dateFormat.getDate();
 
-  return `${year}-${month}-${date}`;
+  return `${year}-${month < 10 ? '0' + month : month}-${date < 10 ? '0' + date : date}`;
 }
