@@ -6,6 +6,7 @@ interface IRemoveModalProps {
   setOpenRemoveModal: (value: boolean) => void;
   reviewId: number;
   mutate: KeyedMutator<any>;
+  id: string;
 }
 
 interface IRemoveResponse {
@@ -16,9 +17,10 @@ export default function RemoveModal({
   setOpenRemoveModal,
   reviewId,
   mutate,
+  id,
 }: IRemoveModalProps) {
   const [remove, { data, loading }] = useMutation<IRemoveResponse>(
-    `/api/users/reviews/remove`
+    `/api/users/${id}/reviews/remove`
   );
 
   const handleRemove = () => {
