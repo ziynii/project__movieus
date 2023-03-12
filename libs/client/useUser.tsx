@@ -1,11 +1,11 @@
-import { User } from '@prisma/client';
+import { IUserWithCount } from '@/components/userModal';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useSWR from 'swr';
 
 interface IProfileResponse {
   ok: boolean;
-  profile: User;
+  profile: IUserWithCount;
 }
 
 export default function useUser() {
