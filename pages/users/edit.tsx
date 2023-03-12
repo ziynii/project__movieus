@@ -2,6 +2,7 @@ import Input from '@/components/input';
 import Layout from '@/components/layout/layout';
 import useMutation from '@/libs/client/useMutation';
 import useUser from '@/libs/client/useUser';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -33,18 +34,38 @@ export default function Edit() {
   );
 
   useEffect(() => {
-    setValue('name', user?.name!);
-    setValue('about', user?.about!);
+    if (user?.name) setValue('name', user.name);
+    if (user?.about) setValue('about', user.about);
+    if (user?.avatar)
+      setAvatarPreview(
+        `https://imagedelivery.net/XdQEHVCtHrxdO7Tk-lWLsw/${user?.avatar}/avatar`
+      );
   }, [setValue, user]);
 
-  const onValid = ({ name, about, avatar }: IEditProfileForm) => {
+  const onValid = async ({ name, about, avatar }: IEditProfileForm) => {
     if (loading) return;
     if (name === '' || about === '') {
       return setError('formErrors', {
         message: '빈 칸을 채워주세요.',
       });
     }
-    editProfile({ name, about });
+    if (avatar && avatar.length > 0) {
+      const cloudflareRequest = await fetch(`/api/files`);
+      const { uploadURL } = await cloudflareRequest.json();
+      const form = new FormData();
+      form.append('file', avatar[0], user?.id + '');
+      const {
+        result: { id },
+      } = await (
+        await fetch(uploadURL, {
+          method: 'POST',
+          body: form,
+        })
+      ).json();
+      editProfile({ name, about, avatarId: id });
+    } else {
+      editProfile({ name, about });
+    }
   };
   const [avatarPreview, setAvatarPreview] = useState('');
   const avatar = watch('avatar');
@@ -64,7 +85,11 @@ export default function Edit() {
           <form className="py-10" onSubmit={handleSubmit(onValid)}>
             <div className="flex items-center space-x-3">
               <div className="h-14 w-14 overflow-hidden rounded-full bg-slate-500">
-                <img src={avatarPreview} />
+                <Image
+                  className="h-full w-full object-cover"
+                  src={avatarPreview}
+									alt='avatarPreview'
+                />
               </div>
               <label
                 htmlFor="picture"
