@@ -1,25 +1,31 @@
+import client from '@/libs/server/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler, { ResponseType } from '@/libs/server/withHandler';
 import { withApiSession } from '@/libs/server/withSession';
-import client from '@/libs/server/client';
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const {
-    session: { user },
-  } = req;
+  const { id } = req.query;
 
-	const myFavMovies = await client.movieLike.findMany({
-		where: {
-			userId: user?.id
-		}
-	})	
-
+  const followings = await client.follow.findMany({
+    where: {
+      followById: Number(id),
+    },
+    select: {
+      followFor: {
+        select: {
+          id: true,
+          name: true,
+          avatar: true,
+        },
+      },
+    },
+  });
   res.json({
     ok: true,
-		myFavMovies
+    followings,
   });
 }
 

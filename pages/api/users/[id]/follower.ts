@@ -7,11 +7,11 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const { user } = req.session;
+  const { id } = req.query;
 
   const followers = await client.follow.findMany({
     where: {
-      followForId: user?.id,
+      followForId: Number(id),
     },
     select: {
       followBy: {
