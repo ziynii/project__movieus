@@ -50,7 +50,10 @@ export default function Header() {
           {isOpenMenu === true && (
             <div className="absolute top-full right-0 mt-2 w-32 rounded border-2 border-indigo-500 bg-white text-indigo-500">
               <ul className="text-sm">
-                <li className="w-full cursor-pointer border-b border-gray-200 hover:bg-indigo-100 hover:font-bold">
+                <li
+                  onClick={() => setIsOpenMenu(false)}
+                  className="w-full cursor-pointer border-b border-gray-200 hover:bg-indigo-100 hover:font-bold"
+                >
                   <Link
                     href={`/users/${user?.id}/reviews`}
                     className="inline-block h-full w-full px-4 py-2"
@@ -58,7 +61,10 @@ export default function Header() {
                     마이페이지
                   </Link>
                 </li>
-                <li className="w-full cursor-pointer border-b border-gray-200 hover:bg-indigo-100 hover:font-bold">
+                <li
+                  onClick={() => setIsOpenMenu(false)}
+                  className="w-full cursor-pointer border-b border-gray-200 hover:bg-indigo-100 hover:font-bold"
+                >
                   <Link
                     href="/users/edit"
                     className="inline-block h-full w-full px-4 py-2"
