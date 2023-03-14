@@ -61,7 +61,7 @@ export default function MovieLayout({ children, tabValue }: IMovieLayoutProps) {
   }, [data?.isLike]);
 
   return (
-    <Layout>
+    <Layout seoTitle={data?.movie?.title!}>
       <div className="relative">
         <div className="relative h-80 w-full lg:h-96">
           <div className="absolute top-0 left-0 z-10 h-full w-full bg-gradient-to-b from-transparent to-gray-900" />
@@ -124,7 +124,12 @@ export default function MovieLayout({ children, tabValue }: IMovieLayoutProps) {
 
           <div className="mt-12 md:mt-20 md:px-20 lg:col-start-2 lg:col-end-5 lg:px-0 ">
             <div className="lg:w-3/5">
-              <TabList list={TABLIST} item={tabValue} page='movies' id={Number(id)}/>
+              <TabList
+                list={TABLIST}
+                item={tabValue}
+                page="movies"
+                id={Number(id)}
+              />
             </div>
             <div className="px-4 py-8 md:py-12">{children}</div>
           </div>

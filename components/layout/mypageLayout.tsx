@@ -1,4 +1,3 @@
-import useUser from '@/libs/client/useUser';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -44,7 +43,6 @@ export default function MypageLayout({
   children,
   tabValue,
 }: IMypageLayoutProps) {
-  const { user } = useUser();
   const router = useRouter();
   const { id } = router.query;
   const { data, mutate } = useSWR<IUserResponse>(
@@ -65,7 +63,7 @@ export default function MypageLayout({
   }, [followData, mutate]);
 
   return (
-    <Layout>
+    <Layout seoTitle={data?.userInfo ? `${data.userInfo.name}의 페이지` : ''}>
       <div className="flex justify-between py-8 px-4 md:px-10 lg:px-20">
         <div className="flex flex-col">
           <div className="relative h-20 w-20 rounded-full bg-gray-400 md:h-36 md:w-36">
@@ -100,7 +98,7 @@ export default function MypageLayout({
           </dl>
           {data?.isCurrentUser ? (
             <button className="rounded bg-indigo-500 px-4 py-2 text-xs hover:bg-indigo-700 md:px-8 md:py-4 md:text-base">
-              <Link href="/mypage/edit" className="h-full w-full">
+              <Link href="/users/edit" className="h-full w-full">
                 프로필 수정
               </Link>
             </button>

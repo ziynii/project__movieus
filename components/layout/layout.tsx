@@ -1,16 +1,21 @@
+import Head from 'next/head';
 import React from 'react';
 import Header from '../header';
 
 interface ILayoutProps {
   children: React.ReactNode;
+	seoTitle: string;
 }
 
-export default function Layout({ children }: ILayoutProps) {
+export default function Layout({ children, seoTitle }: ILayoutProps) {
   return (
     <div>
-			<Header />
+      <Head>
+        <title>{seoTitle} | Movieus</title>
+      </Head>
+      <Header />
 
-      <div className="mx-auto md:max-w-ta lg:max-w-dt mt-20">{children}</div>
+      <div className="mx-auto mt-20 md:max-w-ta lg:max-w-dt">{children}</div>
     </div>
   );
 }

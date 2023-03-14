@@ -30,7 +30,7 @@ export default function Home() {
   const { data: rateData } = useSWR<IRateResponse>('/api/movies/rate');
 
   return (
-    <Layout>
+    <Layout seoTitle='홈'>
       <div>
         <div className="relative h-96 w-full">
           <div className="absolute top-0 left-0 z-10 h-full w-full bg-gradient-to-l from-transparent to-gray-900">
@@ -75,7 +75,7 @@ export default function Home() {
             <p className="text-2xl font-bold">평점이 높은 영화</p>
             <div className="overflow-x-auto scrollbar scrollbar-track-indigo-100 scrollbar-thumb-indigo-500 scrollbar-track-rounded-lg scrollbar-thumb-rounded-lg scrollbar-h-3">
               <ul className="mt-8 flex w-[1920px] space-x-2 pb-6  md:space-x-3">
-                {rateData?.rate.map((movie: ICardMovie) => (
+                {rateData?.rate?.map((movie: ICardMovie) => (
                   <MovieCard key={movie.id} movie={movie} />
                 ))}
               </ul>

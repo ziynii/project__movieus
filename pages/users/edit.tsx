@@ -78,17 +78,18 @@ export default function Edit() {
   }, [avatar]);
 
   return (
-    <Layout>
+    <Layout seoTitle='프로필 수정'>
       <div className="flex justify-center">
         <div className="w-full max-w-modal px-4 py-8">
           <h4>내 정보 수정</h4>
           <form className="py-10" onSubmit={handleSubmit(onValid)}>
             <div className="flex items-center space-x-3">
-              <div className="h-14 w-14 overflow-hidden rounded-full bg-slate-500">
+              <div className="h-14 relative w-14 overflow-hidden rounded-full bg-slate-500">
                 <Image
                   className="h-full w-full object-cover"
                   src={avatarPreview}
 									alt='avatarPreview'
+									fill
                 />
               </div>
               <label
