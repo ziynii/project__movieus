@@ -2,9 +2,6 @@ import MypageLayout from '@/components/layout/mypageLayout';
 import UserCard from '@/components/userCard';
 import React from 'react';
 import useSWR from 'swr';
-import { useRecoilValue } from 'recoil';
-import { openUserModalState } from '@/recoil/states';
-import UserModal from '@/components/userModal';
 import { useRouter } from 'next/router';
 
 interface IFollowUser {
@@ -26,7 +23,6 @@ export default function Following() {
   const { data } = useSWR<IFollowingResponse>(
     id ? `/api/users/${id}/following` : null
   );
-  const isOpenUserModal = useRecoilValue(openUserModalState);
 
   return (
     <MypageLayout tabValue="팔로잉">
@@ -40,7 +36,6 @@ export default function Following() {
         <p className="py-32 text-center">친구를 추가해보세요</p>
       ) : null}
 
-      {isOpenUserModal ? <UserModal /> : null}
     </MypageLayout>
   );
 }

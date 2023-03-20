@@ -1,14 +1,11 @@
 import MovieLayout from '@/components/layout/movieLayout';
 import ReviewCard from '@/components/reviewCard';
 import ReviewModal from '@/components/reviewModal';
-import UserModal from '@/components/userModal';
 import { Review, User } from '@prisma/client';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { IDetailResponse } from './detail';
-import { useRecoilValue } from 'recoil';
-import { openUserModalState } from '@/recoil/states';
 
 export interface ReviewWithUser extends Review {
   user: User;
@@ -25,7 +22,6 @@ export interface IReviewResponse {
 export default function Reviews() {
   const router = useRouter();
   const { id } = router.query;
-  const isOpenUserModal = useRecoilValue(openUserModalState);
   const [openPostModal, setOpenPostModal] = useState(false);
   const [sendReview, setSendReview] = useState(false);
   const { data, mutate } = useSWR<IReviewResponse>(
@@ -102,8 +98,6 @@ export default function Reviews() {
           poster={movieData?.movie?.poster_path!}
         />
       ) : null}
-
-      {isOpenUserModal ? <UserModal /> : null}
 
       <ul className="py-6">
         {data?.reviews?.map((review: ReviewWithUser) => (
