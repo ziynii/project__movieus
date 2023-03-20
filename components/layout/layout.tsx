@@ -4,14 +4,15 @@ import Header from '../header';
 
 interface ILayoutProps {
   children: React.ReactNode;
-	seoTitle: string;
+  seoTitle: string;
 }
 
 export default function Layout({ children, seoTitle }: ILayoutProps) {
+  const title = `${seoTitle} | Movieus`;
   return (
     <div>
       <Head>
-        <title>{seoTitle} | Movieus</title>
+        <title>{title}</title>
       </Head>
       <Header />
 
