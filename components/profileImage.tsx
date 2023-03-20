@@ -11,7 +11,7 @@ export default function ProfileImage({ avatarId }: IProfileImage) {
       src={`https://imagedelivery.net/XdQEHVCtHrxdO7Tk-lWLsw/${avatarId}/public`}
       alt={'프로필 이미지'}
 			fill
-			className="h-full w-full object-cover rounded-full bg-slate-500"
+			className="h-full w-full object-cover rounded-full"
     />
   );
 }

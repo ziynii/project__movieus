@@ -8,6 +8,7 @@ import Rate from './rate';
 import { useEffect, useState } from 'react';
 import { ReviewLike } from '@prisma/client';
 import ProfileImage from './profileImage';
+import DefaultImage from './defaultImage';
 
 interface IReviewCardProps {
   showPoster?: boolean;
@@ -72,7 +73,9 @@ export default function ReviewCard({
           >
             {review?.user?.avatar ? (
               <ProfileImage avatarId={review.user.avatar!} />
-            ) : null}
+            ) : (
+              <DefaultImage />
+            )}
           </div>
           <div className="ml-4">
             <p className="text-sm font-medium">{review?.user?.name}</p>

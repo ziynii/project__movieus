@@ -7,6 +7,7 @@ import Layout from './layout';
 import useSWR from 'swr';
 import { Follow, User } from '@prisma/client';
 import useMutation from '@/libs/client/useMutation';
+import DefaultImage from '../defaultImage';
 
 interface IMypageLayoutProps {
   children: React.ReactNode;
@@ -66,10 +67,12 @@ export default function MypageLayout({
     <Layout seoTitle={data?.userInfo ? `${data.userInfo.name}의 페이지` : ''}>
       <div className="flex justify-between py-8 px-4 md:px-10 lg:px-20">
         <div className="flex flex-col">
-          <div className="relative h-20 w-20 rounded-full bg-gray-400 md:h-36 md:w-36">
+          <div className="relative h-20 w-20 rounded-full md:h-36 md:w-36">
             {data?.userInfo?.avatar ? (
               <ProfileImage avatarId={data.userInfo.avatar!} />
-            ) : null}
+            ) : (
+              <DefaultImage />
+            )}
           </div>
           <div className="mt-4">
             <p className="mb-2 text-lg font-bold md:text-xl">

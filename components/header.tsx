@@ -5,6 +5,7 @@ import useUser from '@/libs/client/useUser';
 import { useRouter } from 'next/router';
 import ProfileImage from './profileImage';
 import useMutation from '@/libs/client/useMutation';
+import DefaultImage from './defaultImage';
 
 export default function Header() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -41,9 +42,9 @@ export default function Header() {
           <div className="flex items-center">
             <div
               onClick={() => setIsOpenMenu((prev) => !prev)}
-              className="relative h-10 w-10 cursor-pointer rounded-full bg-gray-400"
+              className="relative h-10 w-10 cursor-pointer rounded-full"
             >
-              {user?.avatar ? <ProfileImage avatarId={user.avatar!} /> : null}
+              {user?.avatar ? <ProfileImage avatarId={user.avatar!} /> : <DefaultImage />}
             </div>
             <p className="ml-2 hidden md:block">{user?.name} 님</p>
           </div>
