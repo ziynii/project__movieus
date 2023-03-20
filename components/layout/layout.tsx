@@ -8,7 +8,7 @@ interface ILayoutProps {
 }
 
 export default function Layout({ children, seoTitle }: ILayoutProps) {
-  const title = `${seoTitle} | Movieus`;
+  const title = seoTitle ? `${seoTitle} | Movieus` : 'Movieus';
   return (
     <div>
       <Head>
