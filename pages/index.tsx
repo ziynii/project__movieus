@@ -2,10 +2,11 @@ import Layout from '@/components/layout/layout';
 import MovieCard from '@/components/movieCard';
 import SearchBox from '@/components/searchBox';
 import { makeImagePath } from '@/libs/client/utils';
+import { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import useSWR from 'swr';
+import useSWR, { SWRConfig } from 'swr';
 
 export interface ICardMovie {
   id: number;
@@ -25,12 +26,12 @@ interface IRateResponse {
   rate: ICardMovie[];
 }
 
-export default function Home() {
+function Home() {
   const { data: popularData } = useSWR<IPopular>('/api/movies/popular');
   const { data: rateData } = useSWR<IRateResponse>('/api/movies/rate');
 
   return (
-    <Layout seoTitle='홈'>
+    <Layout seoTitle="홈">
       <div>
         <div className="relative h-96 w-full">
           <div className="absolute top-0 left-0 z-10 h-full w-full bg-gradient-to-l from-transparent to-gray-900">
@@ -86,3 +87,49 @@ export default function Home() {
     </Layout>
   );
 }
+
+const Page: NextPage<{ popular: ICardMovie[]; rate: ICardMovie[] }> = ({
+  popular,
+  rate,
+}) => {
+  return (
+    <SWRConfig
+      value={{
+        fallback: {
+          '/api/movies/popular': {
+            ok: true,
+            popular,
+          },
+          '/api/movies/rate': {
+            ok: true,
+            rate,
+          },
+        },
+      }}
+    >
+      <Home />
+    </SWRConfig>
+  );
+};
+
+export async function getServerSideProps() {
+  const popular = await fetch(
+    `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.TMDB_API_KEY}&language=ko-KR&page=1`
+  )
+    .then((res) => res.json())
+    .then((data) => data.results.slice(0, 10));
+
+  const rate = await fetch(
+    `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.TMDB_API_KEY}&language=ko-KR&page=1`
+  )
+    .then((res) => res.json())
+    .then((data) => data.results.slice(0, 10));
+
+  return {
+    props: {
+      popular,
+      rate,
+    },
+  };
+}
+export default Page;
