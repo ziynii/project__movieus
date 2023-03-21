@@ -8,6 +8,7 @@ export default function DefaultImage() {
       alt={'프로필 기본 이미지'}
       fill
       className="h-full w-full rounded-full object-cover"
+      priority={true}
     />
   );
 }
