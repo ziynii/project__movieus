@@ -120,8 +120,11 @@ export default function ReviewCard({
 
       <div className={'mt-4 md:mt-6' + (showPoster ? ' flex items-start' : '')}>
         {showPoster && (
-          <div className="relative h-32 w-20 shrink-0 md:h-36 md:w-24">
-            <Link href={`/movies/${review?.movieId}/detail`}>
+          <div className="h-32 w-20 shrink-0 md:h-36 md:w-24">
+            <Link
+              href={`/movies/${review?.movieId}/detail`}
+              className="relative inline-block h-full w-full"
+            >
               <Image
                 src={makeImagePath(review?.posterUrl)}
                 alt={'리뷰'}
