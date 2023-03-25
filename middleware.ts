@@ -16,6 +16,14 @@ export function middleware(req: NextRequest) {
       return NextResponse.redirect(url);
     }
   }
+
+	if (req.nextUrl.pathname.startsWith('/login')) {
+    if (req.cookies.has('movieussession')) {
+      const url = req.nextUrl.clone();
+      url.pathname = '/';
+      return NextResponse.redirect(url);
+    }
+  }
 }
 
 export const config = {
