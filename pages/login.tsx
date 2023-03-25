@@ -1,7 +1,7 @@
 import Input from '@/components/input';
 import Loading from '@/components/loading';
 import useMutation from '@/libs/client/useMutation';
-import useUser from '@/libs/client/useUser';
+import logo from '/public/logo.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -20,11 +20,10 @@ export interface IMutationResponse {
 }
 
 export default function Login() {
-  const user = useUser();
   const router = useRouter();
   const [disabled, setDisabled] = useState(false);
   const [correct, setCorrect] = useState(false);
-  const [login, { loading: loginLoading, data: loginData, error: loginError }] =
+  const [login, { loading: loginLoading, data: loginData }] =
     useMutation<IMutationResponse>('/api/users/login');
   const [confirmToken, { loading: tokenLoading, data: tokenData }] =
     useMutation<IMutationResponse>('/api/users/confirm');
@@ -57,17 +56,17 @@ export default function Login() {
     }
   }, [tokenData, router]);
 
-  useEffect(() => {
-    if (user && user.user !== null && user.user !== undefined) {
-      router.push('/');
-    }
-  }, [user, router]);
-
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-tr  from-gray-900 to-indigo-900">
       <div className="flex flex-col items-center justify-center rounded-md bg-gray-900 bg-opacity-80 p-12">
-        <div>
-          <Image src="/logo.svg" alt="logo" width={256} height={72} />
+        <div className="relative h-20 w-64">
+          <Image
+            className="h-auto w-auto"
+            src={logo}
+            alt="logo"
+            fill
+            priority={true}
+          />
         </div>
         <p className="mt-6 text-2xl font-bold">LOGIN</p>
 
