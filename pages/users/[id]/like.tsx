@@ -23,7 +23,7 @@ export default function Like() {
   return (
     <MypageLayout tabValue="찜 한 영화">
       <ul className="grid grid-cols-3 justify-items-center gap-x-4 gap-y-6 md:grid-cols-4 lg:grid-cols-5">
-        {data?.myFavMovies.map((movie: IMovieLike) => (
+        {data?.myFavMovies?.map((movie: IMovieLike) => (
           <MovieCard
             key={movie.movieId}
             movie={{
