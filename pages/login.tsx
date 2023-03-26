@@ -1,7 +1,7 @@
 import Input from '@/components/input';
 import Loading from '@/components/loading';
 import useMutation from '@/libs/client/useMutation';
-import logo from '/public/logo.svg';
+import logo from '/public/images/logo.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';

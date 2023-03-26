@@ -30,7 +30,7 @@ export default function Header() {
         <Link href="/" className="absolute left-1/2 -translate-x-1/2">
           <Image
             className="h-auto w-auto"
-            src="/logo.svg"
+            src="/images/logo.svg"
             alt="logo"
             width={168}
             height={72}
