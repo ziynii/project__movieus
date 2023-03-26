@@ -22,6 +22,10 @@ export default function Document() {
           sizes="16x16"
           href="/images/favicon-16x16.png"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <body>
         <Main />
