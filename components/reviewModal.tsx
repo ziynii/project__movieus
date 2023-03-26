@@ -47,7 +47,7 @@ export default function ReviewModal({
 
   return (
     <div className="fixed top-0 left-0 z-50 flex h-screen w-screen items-center justify-center bg-slate-700 bg-opacity-40">
-      <div className="w-3/5 max-w-modal overflow-hidden rounded-md bg-white">
+      <div className="w-5/6 md:w-3/5 max-w-modal overflow-hidden rounded-md bg-white">
         <p className="bg-indigo-700 py-2 text-center">리뷰 쓰기</p>
         <form className="p-4" onSubmit={handleSubmit(onValid)}>
           <div className="flex items-center justify-between">

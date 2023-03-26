@@ -81,7 +81,7 @@ export default function MovieLayout({ children, tabValue }: IMovieLayoutProps) {
 
         <div className="lg:relative lg:-top-14 lg:grid lg:grid-cols-5 lg:gap-x-6 lg:px-4">
           <div className="absolute top-44 left-1/2 z-20 flex w-4/5 -translate-x-1/2 items-center lg:relative lg:top-0 lg:left-0 lg:block lg:w-full lg:translate-x-0">
-            <div className="relative h-40 w-28 lg:h-72 lg:w-full">
+            <div className="relative flex-shrink-0 h-40 w-28 lg:h-72 lg:w-full">
               {data?.movie ? (
                 <Image
                   src={makeImagePath(data?.movie?.poster_path!)}

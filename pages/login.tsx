@@ -58,7 +58,7 @@ export default function Login() {
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-tr  from-gray-900 to-indigo-900">
-      <div className="flex flex-col items-center justify-center rounded-md bg-gray-900 bg-opacity-80 p-12">
+      <div className="flex flex-col items-center justify-center rounded-md bg-gray-900 bg-opacity-80 px-2 py-4 md:p-12">
         <div className="relative h-20 w-64">
           <Image
             className="h-auto w-auto"
@@ -72,9 +72,9 @@ export default function Login() {
 
         <form
           onSubmit={emailHandleSubmit(onEmailValid)}
-          className="mt-6 flex w-full flex-col"
+          className="mt-6 flex w-full flex-col items-center"
         >
-          <div className="flex items-end">
+          <div className="flex items-end w-11/12 md:w-full">
             <Input
               register={emailRegister('email', {
                 required: true,
@@ -120,7 +120,7 @@ export default function Login() {
           onSubmit={tokenHandleSubmit(onTokenValid)}
           className="mt-4 flex w-full flex-col items-center"
         >
-          <div className="flex w-full flex-col">
+          <div className="flex w-11/12 flex-col md:w-full">
             <Input
               register={tokenRegister('token', {
                 required: true,
