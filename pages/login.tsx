@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Head from 'next/head';
 
 interface IEmailForm {
   email: string;
@@ -57,95 +58,100 @@ export default function Login() {
   }, [tokenData, router]);
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-tr  from-gray-900 to-indigo-900">
-      <div className="flex flex-col items-center justify-center rounded-md bg-gray-900 bg-opacity-80 px-2 py-4 md:p-12">
-        <div className="relative h-20 w-64">
-          <Image
-            className="h-auto w-auto"
-            src={logo}
-            alt="logo"
-            fill
-            priority={true}
-          />
-        </div>
-        <p className="mt-6 text-2xl font-bold">LOGIN</p>
-
-        <form
-          onSubmit={emailHandleSubmit(onEmailValid)}
-          className="mt-6 flex w-full flex-col items-center"
-        >
-          <div className="flex items-end w-11/12 md:w-full">
-            <Input
-              register={emailRegister('email', {
-                required: true,
-              })}
-              name="email"
-              type="email"
-              label="이메일"
-              kind="email"
-              placeholder="이메일을 입력해주세요"
-              required
-              disabled={disabled}
+    <>
+      <Head>
+        <title>로그인 | Movieus</title>
+      </Head>
+      <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-tr  from-gray-900 to-indigo-900">
+        <div className="flex flex-col items-center justify-center rounded-md bg-gray-900 bg-opacity-80 px-2 py-4 md:p-12">
+          <div className="relative h-20 w-64">
+            <Image
+              className="h-auto w-auto"
+              src={logo}
+              alt="logo"
+              fill
+              priority={true}
             />
+          </div>
+          <p className="mt-6 text-2xl font-bold">LOGIN</p>
 
-            <button
-              type="submit"
-              disabled={disabled}
-              className="ml-2 flex h-12 w-20 items-center justify-center rounded bg-white text-indigo-500 disabled:opacity-70 hover:bg-indigo-50 disabled:hover:bg-white"
-            >
-              {loginLoading ? (
-                <Loading />
-              ) : (
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4.5 12.75l6 6 9-13.5"
-                  ></path>
-                </svg>
+          <form
+            onSubmit={emailHandleSubmit(onEmailValid)}
+            className="mt-6 flex w-full flex-col items-center"
+          >
+            <div className="flex w-11/12 items-end md:w-full">
+              <Input
+                register={emailRegister('email', {
+                  required: true,
+                })}
+                name="email"
+                type="email"
+                label="이메일"
+                kind="email"
+                placeholder="이메일을 입력해주세요"
+                required
+                disabled={disabled}
+              />
+
+              <button
+                type="submit"
+                disabled={disabled}
+                className="ml-2 flex h-12 w-20 items-center justify-center rounded bg-white text-indigo-500 disabled:opacity-70 hover:bg-indigo-50 disabled:hover:bg-white"
+              >
+                {loginLoading ? (
+                  <Loading />
+                ) : (
+                  <svg
+                    className="h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4.5 12.75l6 6 9-13.5"
+                    ></path>
+                  </svg>
+                )}
+              </button>
+            </div>
+          </form>
+
+          <form
+            onSubmit={tokenHandleSubmit(onTokenValid)}
+            className="mt-4 flex w-full flex-col items-center"
+          >
+            <div className="flex w-11/12 flex-col md:w-full">
+              <Input
+                register={tokenRegister('token', {
+                  required: true,
+                })}
+                name="token"
+                type="text"
+                label="인증번호"
+                kind="text"
+                placeholder="메일로 발송된 인증번호를 입력해주세요"
+                required
+              />
+              {correct && (
+                <p className="mt-2 text-xs text-red-400">
+                  잘못된 인증번호입니다. 다시 입력해주세요
+                </p>
               )}
+            </div>
+            <button className="mt-8 h-14 w-48 rounded-full bg-indigo-500 hover:bg-indigo-700 ">
+              로그인
             </button>
-          </div>
-        </form>
-
-        <form
-          onSubmit={tokenHandleSubmit(onTokenValid)}
-          className="mt-4 flex w-full flex-col items-center"
-        >
-          <div className="flex w-11/12 flex-col md:w-full">
-            <Input
-              register={tokenRegister('token', {
-                required: true,
-              })}
-              name="token"
-              type="text"
-              label="인증번호"
-              kind="text"
-              placeholder="메일로 발송된 인증번호를 입력해주세요"
-              required
-            />
-            {correct && (
-              <p className="mt-2 text-xs text-red-400">
-                잘못된 인증번호입니다. 다시 입력해주세요
-              </p>
-            )}
-          </div>
-          <button className="mt-8 h-14 w-48 rounded-full bg-indigo-500 hover:bg-indigo-700 ">
-            로그인
-          </button>
-        </form>
-        <p className="mt-6 text-xs">
-          MOVIEUS는 이메일을 이용한 일회성 로그인을 지원합니다
-        </p>
+          </form>
+          <p className="mt-6 text-xs">
+            MOVIEUS는 이메일을 이용한 일회성 로그인을 지원합니다
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
