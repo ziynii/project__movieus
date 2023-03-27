@@ -53,6 +53,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   console.log('mailOption', mailOption);
   console.log('sendMail', sendMail);
+	console.log('pw', process.env.MAIL_PW)
 
   return res.json({
     ok: true,
