@@ -26,28 +26,33 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     },
   });
 
-	console.log('created token in db')
+  console.log('created token in db');
 
   const mailOption = {
     from: process.env.MAIL_ID,
     to: email,
     subject: 'movieus 로그인 인증번호입니다.',
-    text: `로그인 인증번호는 ${payload}입니다.`,
+    html: `
+		<div style='width: 80%; text-align: center; padding: 16px; background-color: #eee; border-radius: 12px;'>
+		<h1>Welcome to Movieus</h1>
+		<h3>로그인 인증번호는 ${payload}입니다.</h3>
+		<p>홈페이지로 돌아가 인증번호를 입력해주세요.</p>
+		<p>위 번호는 1회 인증 후 폐기됩니다.</p>
+		</div>
+		`,
   };
 
-  const sendMail = await smtpTransport.sendMail(mailOption, (error, res) => {
+  const sendMail = await smtpTransport.sendMail(mailOption, (error, data) => {
     if (error) {
       console.log(error);
-      return null;
     } else {
-      console.log(res);
-      return null;
+      console.log('response', data);
     }
+    smtpTransport.close();
   });
 
   console.log('mailOption', mailOption);
   console.log('sendMail', sendMail);
-  smtpTransport.close();
 
   return res.json({
     ok: true,
