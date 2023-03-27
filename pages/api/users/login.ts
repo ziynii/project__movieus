@@ -26,6 +26,19 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     },
   });
 
+  await new Promise((resolve, reject) => {
+    // verify connection configuration
+    smtpTransport.verify(function (error, success) {
+      if (error) {
+        console.log(error);
+        reject(error);
+      } else {
+        console.log('Server is ready to take our messages');
+        resolve(success);
+      }
+    });
+  });
+
   console.log('created token in db');
 
   const mailOption = {
@@ -42,18 +55,27 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 		`,
   };
 
-  const sendMail = await smtpTransport.sendMail(mailOption, (error, data) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('response', data);
-    }
-    smtpTransport.close();
+  await new Promise((resolve, reject) => {
+    // send mail
+    smtpTransport.sendMail(mailOption, (err, info) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        console.log(info);
+        resolve(info);
+      }
+    });
   });
 
-  console.log('mailOption', mailOption);
-  console.log('sendMail', sendMail);
-	console.log('pw', process.env.MAIL_PW)
+  // const sendMail = await smtpTransport.sendMail(mailOption, (error, data) => {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+  //     console.log('response', data);
+  //   }
+  //   smtpTransport.close();
+  // });
 
   return res.json({
     ok: true,
