@@ -1,16 +1,16 @@
-import nodemailer from "nodemailer";
+import nodemailer from 'nodemailer';
 
 const smtpTransport = nodemailer.createTransport({
-service: "Naver",
-host: "smtp.naver.com",
-port: 465,
-auth: {
-user: process.env.MAIL_ID,
-pass: process.env.MAIL_PW,
-},
-tls: {
-rejectUnauthorized: false,
-},
+  service: 'Naver',
+  host: 'smtp.naver.com',
+  port: 465,
+  auth: {
+    user: process.env.MAIL_ID,
+    pass: process.env.MAIL_PW,
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
 });
 
 export default smtpTransport;

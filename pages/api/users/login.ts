@@ -26,6 +26,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     },
   });
 
+	console.log('created token in db')
+
   const mailOption = {
     from: process.env.MAIL_ID,
     to: email,
@@ -42,8 +44,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return null;
     }
   });
+
+  console.log('mailOption', mailOption);
+  console.log('sendMail', sendMail);
   smtpTransport.close();
-  console.log(sendMail);
 
   return res.json({
     ok: true,
