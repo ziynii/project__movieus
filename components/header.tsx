@@ -44,7 +44,11 @@ export default function Header() {
               onClick={() => setIsOpenMenu((prev) => !prev)}
               className="relative h-10 w-10 cursor-pointer rounded-full"
             >
-              {user?.avatar ? <ProfileImage avatarId={user.avatar!} /> : <DefaultImage />}
+              {user?.avatar ? (
+                <ProfileImage avatarId={user.avatar!} />
+              ) : (
+                <DefaultImage />
+              )}
             </div>
             <p className="ml-2 hidden md:block">{user?.name} 님</p>
           </div>

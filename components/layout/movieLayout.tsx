@@ -49,16 +49,16 @@ export default function MovieLayout({ children, tabValue }: IMovieLayoutProps) {
   const handleMovieFav = () => {
     if (loading) return;
     fav({ title: data?.movie?.title, posterUrl: data?.movie?.poster_path });
-    // setIsLike((prev) => !prev);
+    setIsLike((prev) => !prev);
   };
 
-  // const [isLike, setIsLike] = useState(false);
+  const [isLike, setIsLike] = useState(false);
 
-  // useEffect(() => {
-  //   if (data?.isLike) {
-  //     setIsLike(true);
-  //   }
-  // }, [data?.isLike]);
+  useEffect(() => {
+    if (data?.isLike) {
+      setIsLike(true);
+    }
+  }, [data?.isLike]);
 
   return (
     <Layout seoTitle={data?.movie?.title!}>
@@ -81,7 +81,7 @@ export default function MovieLayout({ children, tabValue }: IMovieLayoutProps) {
 
         <div className="lg:relative lg:-top-14 lg:grid lg:grid-cols-5 lg:gap-x-6 lg:px-4">
           <div className="absolute top-44 left-1/2 z-20 flex w-4/5 -translate-x-1/2 items-center lg:relative lg:top-0 lg:left-0 lg:block lg:w-full lg:translate-x-0">
-            <div className="relative flex-shrink-0 h-40 w-28 lg:h-72 lg:w-full">
+            <div className="relative h-40 w-28 flex-shrink-0 lg:h-72 lg:w-full">
               {data?.movie ? (
                 <Image
                   src={makeImagePath(data?.movie?.poster_path!)}
@@ -98,7 +98,7 @@ export default function MovieLayout({ children, tabValue }: IMovieLayoutProps) {
                 {data?.movie?.title}
               </h4>
 
-              {/* <button
+              <button
                 onClick={handleMovieFav}
                 className="mt-3 flex rounded-full bg-indigo-700 px-4 py-1 text-center text-xs"
               >
@@ -118,7 +118,7 @@ export default function MovieLayout({ children, tabValue }: IMovieLayoutProps) {
                   ></path>
                 </svg>
                 찜하기
-              </button> */}
+              </button>
             </div>
           </div>
 
