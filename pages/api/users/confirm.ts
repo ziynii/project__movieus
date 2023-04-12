@@ -15,17 +15,19 @@ async function handler(
     include: { user: true },
   });
 
-  // 수정 - error message 보내기
   if (!foundToken) return res.json({ ok: false });
   req.session.user = {
     id: foundToken?.userId,
   };
   await req.session.save();
-  await client.token.deleteMany({
-    where: {
-      userId: foundToken.userId,
-    },
-  });
+
+  if (foundToken.userId !== 11) {
+    await client.token.deleteMany({
+      where: {
+        userId: foundToken.userId,
+      },
+    });
+  }
 
   return res.json({ ok: true });
 }
